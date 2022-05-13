@@ -27,21 +27,30 @@ with open ("Resources/election_results.csv", "r") as election_data:
             candidate_options.append(row[2])
             candidate_votes[candidate_name] = 0
         candidate_votes[candidate_name] += 1
+
+with open("Resources/election_results.txt","w") as txt_file:
+    txt_file.write(f"\nElection Results\n"
+                   f"-------------------\n"
+                   f"Total Votes: {total_votes}\n"
+                   f"-------------------\n")
+
         #for loop to find out the vote_percentage 
 for candidate_name in candidate_votes:
     votes = candidate_votes[candidate_name]
     vote_percentage = (votes/total_votes) * 100
+    with open("Resources/election_results.txt","a") as txt_file:
+        txt_file.write(f"{candidate_name}:{vote_percentage:.1f}% ({votes:,})\n")
    # print(f'{candidate_name} received {round(vote_percentage,1)} % of the votes')   
     if (votes > winning_count):
         winning_count = votes
         winning_percentage = vote_percentage
         winning_candidate = candidate_name
-    for candidates in candidate_votes:
-        winning_candidate_summary = (
-        f"--------------------------\n"
-        f"Winner: {winning_candidate}\n"
-        f"Winning Vote Count: {winning_count}\n"
-        f"Winning Percentage: {winning_percentage:.1f}%\n"
-        f"---------------------------\n")        
-   # print(f"{candidate_name}:{vote_percentage:.1f}% ({votes:,})\n")
-print(winning_candidate_summary)
+with open("Resources/election_results.txt","a") as txt_file:
+    txt_file.write(    f"--------------------------\n"
+                       f"Winner: {winning_candidate}\n"
+                       f"Winning Vote Count: {winning_count}\n"
+                       f"Winning Percentage: {winning_percentage:.1f}%\n"
+                       f"---------------------------\n")
+
+
+    
